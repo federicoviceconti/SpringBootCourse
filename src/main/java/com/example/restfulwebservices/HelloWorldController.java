@@ -2,6 +2,7 @@ package com.example.restfulwebservices;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
@@ -22,7 +23,8 @@ public class HelloWorldController {
     }
 
     @GetMapping("/helloworld-international")
-    public String getHelloWorldInternationalized(@RequestHeader(name = "Accept-Language", required = false) Locale locale) {
+    public String getHelloWorldInternationalized() {
+        Locale locale = LocaleContextHolder.getLocale();
         String greetings = messageSource.getMessage("greetings", null, locale);
         String from = messageSource.getMessage("from", null, locale);
         String owner = messageSource.getMessage("owner", null, locale);
