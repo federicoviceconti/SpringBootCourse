@@ -55,12 +55,12 @@ public class VersionController {
         return new PersonV2(new Name("First", "Last"));
     }
 
-    @GetMapping(value = "/some-person/produces", produces = "application/my.company.app+json")
+    @GetMapping(value = "/some-person/produces", produces = "application/my.company.app-v1+json")
     public PersonV1 produces1() {
         return new PersonV1("First Last");
     }
 
-    @GetMapping(value = "/some-person/produces", produces = "application/my.company.app+json")
+    @GetMapping(value = "/some-person/produces", produces = "application/my.company.app-v2+json")
     public PersonV2 produces2() {
         return new PersonV2(new Name("First", "Last"));
     }

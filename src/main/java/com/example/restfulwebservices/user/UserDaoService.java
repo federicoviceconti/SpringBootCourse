@@ -1,45 +1,45 @@
 package com.example.restfulwebservices.user;
 
 import com.example.restfulwebservices.model.User;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
-@Component
+@Repository
+@Transactional
 public class UserDaoService {
-    private List<User> users;
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    public UserDaoService() {
-        this.users = new ArrayList<>();
-    }
 
     public User add(User user) {
-        if(validateUser(user)) {
-            user.setId(users.size() + 1);
-            this.users.add(user);
-
-            return user;
-        } else {
-            return null;
-        }
-    }
-
-    private boolean validateUser(User user) {
-        return user != null && user.getName() != null && user.getBirthDate() != null;
+        entityManager.persist(user);
+        return user;
     }
 
     public List<User> findAll() {
-        return new ArrayList<>(users);
+        TypedQuery<User> q = entityManager.createNamedQuery("User.findAll", User.class);
+        return q.getResultList();
     }
 
     public User find(int id) {
-        Optional<User> user = users.stream().filter(it -> it.getId() == id).findFirst();
-        return user.orElse(null);
+        return entityManager.find(User.class, id);
     }
 
     public boolean deleteById(int id) {
-        return this.users.removeIf(user -> user.getId() == id);
+        User user = entityManager.find(User.class, id);
+
+        if(user != null) {
+            entityManager.remove(user);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
