@@ -1,8 +1,8 @@
 package com.example.restfulwebservices;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonFilter;
 
-@JsonIgnoreProperties(value = {"f1", "f2"})
+@JsonFilter("SomeBeanFilter")
 public class SomeBean {
     private String f1;
     private String f2;
@@ -24,5 +24,20 @@ public class SomeBean {
 
     public String getF3() {
         return f3;
+    }
+
+    public SomeBean setF1(String f1) {
+        this.f1 = f1;
+        return this;
+    }
+
+    public SomeBean setF2(String f2) {
+        this.f2 = f2;
+        return this;
+    }
+
+    public SomeBean setF3(String f3) {
+        this.f3 = f3;
+        return this;
     }
 }

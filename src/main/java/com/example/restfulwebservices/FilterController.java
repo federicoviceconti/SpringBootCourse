@@ -1,6 +1,10 @@
 package com.example.restfulwebservices;
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,13 +23,24 @@ public class FilterController {
         someBeanList.add(new SomeBean("v31", "v32", "v33"));
     }
 
+    private <T> MappingJacksonValue returnFilteredBean(T bean, String... args) {
+        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("SomeBeanFilter",
+                SimpleBeanPropertyFilter.filterOutAllExcept(args)
+        );
+
+        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(bean);
+        mappingJacksonValue.setFilters(filterProvider);
+        return mappingJacksonValue;
+    }
+
     @GetMapping("/filter")
-    public SomeBean getSomeBean() {
-        return someBeanList.get((int) (Math.random() * someBeanList.size()));
+    public MappingJacksonValue getSomeBean() {
+        SomeBean someBean = someBeanList.get((int) (Math.random() * someBeanList.size()));
+        return returnFilteredBean(someBean, "f1", "f3");
     }
 
     @GetMapping("/all-filter")
-    public List<SomeBean> getSomeBeanList() {
-        return someBeanList;
+    public MappingJacksonValue getSomeBeanList() {
+        return returnFilteredBean(this.someBeanList, "f1");
     }
 }
