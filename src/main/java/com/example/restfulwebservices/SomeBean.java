@@ -1,9 +1,9 @@
 package com.example.restfulwebservices;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(value = {"f1", "f2"})
 public class SomeBean {
-    @JsonIgnore
     private String f1;
     private String f2;
     private String f3;
