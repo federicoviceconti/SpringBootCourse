@@ -1,6 +1,9 @@
 package com.example.restfulwebservices;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class SomeBean {
+    @JsonIgnore
     private String f1;
     private String f2;
     private String f3;
