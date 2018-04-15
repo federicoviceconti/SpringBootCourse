@@ -1,5 +1,7 @@
-package com.example.restfulwebservices;
+package com.example.restfulwebservices.filter;
 
+import com.example.restfulwebservices.common.Field;
+import com.example.restfulwebservices.model.SomeBean;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
@@ -36,11 +38,11 @@ public class FilterController {
     @GetMapping("/filter")
     public MappingJacksonValue getSomeBean() {
         SomeBean someBean = someBeanList.get((int) (Math.random() * someBeanList.size()));
-        return returnFilteredBean(someBean, "f1", "f3");
+        return returnFilteredBean(someBean, Field.F1, Field.F3);
     }
 
     @GetMapping("/all-filter")
     public MappingJacksonValue getSomeBeanList() {
-        return returnFilteredBean(this.someBeanList, "f1");
+        return returnFilteredBean(this.someBeanList, Field.F1);
     }
 }

@@ -1,9 +1,9 @@
-package com.example.restfulwebservices;
+package com.example.restfulwebservices.user;
 
+import com.example.restfulwebservices.model.User;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 

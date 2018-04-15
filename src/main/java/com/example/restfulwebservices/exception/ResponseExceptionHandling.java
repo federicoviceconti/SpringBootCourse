@@ -1,6 +1,5 @@
-package com.example.restfulwebservices;
+package com.example.restfulwebservices.exception;
 
-import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

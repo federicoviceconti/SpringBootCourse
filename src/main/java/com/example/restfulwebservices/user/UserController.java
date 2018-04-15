@@ -1,5 +1,8 @@
-package com.example.restfulwebservices;
+package com.example.restfulwebservices.user;
 
+import com.example.restfulwebservices.exception.UserNotFoundException;
+import com.example.restfulwebservices.common.Field;
+import com.example.restfulwebservices.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
@@ -26,7 +29,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public Resource<User> getUsers(@PathVariable("id") int id) {
+    public Resource<User> getUsers(@PathVariable(Field.ID) int id) {
         User user = userDaoService.find(id);
 
         if (user != null) {

@@ -1,5 +1,6 @@
-package com.example.restfulwebservices;
+package com.example.restfulwebservices.helloworld;
 
+import com.example.restfulwebservices.model.HelloWorldBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
