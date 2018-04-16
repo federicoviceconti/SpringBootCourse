@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @NamedQueries (value = {
@@ -13,13 +14,16 @@ import java.time.LocalDate;
 public class User {
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
     @Size(min = 2, message = "Should contains at least {min} characters!")
     @NotNull
     private String name;
     @Past(message = "Should insert a past date")
     @NotNull
     private LocalDate birthDate;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 
     public User() {
     }
@@ -29,7 +33,7 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -54,5 +58,17 @@ public class User {
     public User setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
         return this;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 }
