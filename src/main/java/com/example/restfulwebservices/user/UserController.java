@@ -42,13 +42,12 @@ public class UserController {
 
         if (user != null) {
             //HATEOAS
-            Resource<User> resource = new Resource<>(user);
-            ControllerLinkBuilder builder = linkTo(
-                    methodOn(this.getClass()).getUsers()
+            return getResources(
+                    User.class,
+                    user,
+                    methodOn(this.getClass()).getUsers(),
+                    Field.ALL_USERS
             );
-
-            resource.add(builder.withRel(Field.ALL_USERS));
-            return resource;
         }
         throw new UserNotFoundException("Error fetch user: " + id);
     }
@@ -69,13 +68,12 @@ public class UserController {
             post.setUser(user);
             postRepository.save(post);
 
-            Resource<Post> resource = new Resource<>(post);
-            ControllerLinkBuilder builder = linkTo(
-                    methodOn(this.getClass()).getPostsByUserId(id)
+            return getResources(
+                    Post.class,
+                    post,
+                    methodOn(this.getClass()).getPostsByUserId(id),
+                    Field.POST_BY_ID
             );
-            resource.add(builder.withRel(Field.POST_BY_ID));
-
-            return resource;
         } else {
             throw new PostMalformedException("Null post!");
         }
@@ -107,5 +105,12 @@ public class UserController {
         } else {
             throw new UserNotFoundException("User was not found: " + id);
         }
+    }
+
+    private <T> Resource<T> getResources(Class<T> resources, T added, Object invokationValue, String id) {
+        Resource<T> resource = new Resource<>(added);
+        ControllerLinkBuilder builder = linkTo(invokationValue);
+        resource.add(builder.withRel(id));
+        return resource;
     }
 }
